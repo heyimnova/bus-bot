@@ -1,6 +1,6 @@
 {
   "name": "bus-bot",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "Discord bot to notify users of the arrival of their college buses",
   "main": "./src/main.js",
   "scripts": {
@@ -10,8 +10,16 @@
     "prettier": "npx prettier src --check",
     "prettier:fix": "npm run prettier -- --write"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/heyimnova/bus-bot.git"
+  },
   "author": "Nova Witterick",
   "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/heyimnova/bus-bot/issues"
+  },
+  "homepage": "https://github.com/heyimnova/bus-bot#readme",
   "dependencies": {
     "@discordjs/builders": "^1.3.0",
     "@discordjs/rest": "^1.3.0",
