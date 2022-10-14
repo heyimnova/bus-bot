@@ -23,7 +23,8 @@ module.exports = async (client) => {
     // If saved bus channel no longer exists, create a new channel and update the database
     if (!busChannel) {
       const newBusChannelId = (
-        await guild.channels.create("bus-updates", {
+        await guild.channels.create({
+          name: "bus-updates",
           reason: "Bus Channel missing",
         })
       )

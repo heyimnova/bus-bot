@@ -1,7 +1,7 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const guildModel = require("../models/guild");
 const busModel = require("../models/bus");
-const BusEmbed = require("../embeds/bus");
+const createBusEmbed = require("../embeds/bus");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -38,9 +38,7 @@ module.exports = {
 
     // Reply with an embed containing the buses location
     await interaction.reply({
-      embeds: [
-        new BusEmbed(interaction.client, interaction.guild, requestedBus),
-      ],
+      embeds: [createBusEmbed(interaction.client, interaction.guild, requestedBus)],
     });
   },
 };

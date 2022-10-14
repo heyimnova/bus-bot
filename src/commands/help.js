@@ -1,12 +1,12 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
-const { Embed } = require("discord.js");
+const createHelpEmbed = require("../embeds/help");
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("help")
     .setDescription("DM's you with instructions on the Bus Bot's commands!"),
   async execute(interaction) {
-    // An object containing all command names and descrptions for every command in embed field format
+    // An object containing all command names and descriptions for every command in embed field format
     const embedFields = await interaction.client.commands.map((command) => {
       return {
         name: `/${command.data.name}`,
@@ -16,21 +16,7 @@ module.exports = {
 
     // DM the user the embed
     await interaction.user.send({
-      embeds: [
-        new Embed()
-          .hexColor(0xe63312)
-          .setDescription(
-            "(Only /help and /setup are available before setup is complete)"
-          )
-          .setFooter({
-            text: `Sent from ${interaction.guild.name}`,
-            iconURL: interaction.guild.iconURL(),
-          })
-          .setThumbnail(interaction.client.user.avatarURL())
-          .setTimestamp(Date.now())
-          .setTitle("Commands:")
-          .addFields(...embedFields),
-      ],
+      embeds: [createHelpEmbed(interaction, embedFields)],
     });
 
     // Reply to the message as well so discord doesn't complain

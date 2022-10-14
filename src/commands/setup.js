@@ -2,7 +2,7 @@ const { SlashCommandBuilder } = require("@discordjs/builders");
 const registerCommands = require("../modules/registerCommands");
 const busModel = require("../models/bus");
 const guildModel = require("../models/guild");
-const SetupEmbed = require("../embeds/setup");
+const createSetupEmbed = require("../embeds/setup");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -18,7 +18,7 @@ module.exports = {
       ).permissions.has("MANAGE_GUILD"))
     ) {
       await interaction.reply(
-        'You need the "manage guild" permission to use this command!'
+        "You need the \"manage guild\" permission to use this command!"
       );
       return;
     }
@@ -31,7 +31,7 @@ module.exports = {
 
     // Send the initial reply
     await interaction.reply({
-      embeds: [new SetupEmbed()],
+      embeds: [createSetupEmbed()],
     });
 
     /**
@@ -52,7 +52,7 @@ module.exports = {
       } catch (err) {
         if (err.message === "Missing Permissions") {
           interaction.editReply({
-            embeds: [new SetupEmbed("rolesFailed")],
+            embeds: [createSetupEmbed("rolesFailed")],
           });
           interaction.followUp({
             content:
@@ -75,12 +75,13 @@ module.exports = {
 
     // Update the reply
     await interaction.editReply({
-      embeds: [new SetupEmbed("rolesComplete")],
+      embeds: [createSetupEmbed("rolesComplete")],
     });
 
     // Create the bus updates channel and save its id
     const busChannelId = (
-      await interaction.guild.channels.create("bus-updates", {
+      await interaction.guild.channels.create({
+        name: "bus-updates",
         reason: "Bus Bot setup",
       })
     )
@@ -89,7 +90,7 @@ module.exports = {
 
     // Update the reply
     interaction.editReply({
-      embeds: [new SetupEmbed("channelComplete")],
+      embeds: [createSetupEmbed("channelComplete")],
     });
 
     // An array containing the names of all the clients commands
@@ -100,7 +101,7 @@ module.exports = {
 
     // Update the reply
     await interaction.editReply({
-      embeds: [new SetupEmbed("commandsComplete")],
+      embeds: [createSetupEmbed("commandsComplete")],
     });
 
     // An array containing all of the bus roles just created
@@ -129,7 +130,7 @@ module.exports = {
 
     // Update reply
     await interaction.editReply({
-      embeds: [new SetupEmbed("setupComplete")],
+      embeds: [createSetupEmbed("setupComplete")],
     });
 
     await interaction.followUp("Setup Complete!");
