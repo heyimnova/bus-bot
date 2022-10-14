@@ -3,12 +3,11 @@ require("dotenv").config();
 const { Client, GatewayIntentBits, Collection } = require("discord.js");
 const { readdirSync } = require("fs");
 const mongoose = require("mongoose");
-// Const { scheduleJob } = require("node-schedule");
+const { scheduleJob } = require("node-schedule");
 const scrapeBusLocations = require("./modules/scrapeBusLocations");
 const busModel = require("./models/bus");
 const { initialiseBusCollection } = require("./modules/updateDatabase");
-// Const sendBusUpdates = require('./modules/sendBusUpdates');
-// const getChangedBuses = require('./modules/getChangedBuses');
+const sendBusUpdates = require("./modules/sendBusUpdates");
 
 // Create the bot client instance
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
@@ -26,7 +25,6 @@ for (const file of eventFiles) {
 }
 
 // Load commands from command files
-
 client.commands = new Collection();
 const commandFiles = readdirSync(`${__dirname}/commands`);
 
@@ -63,17 +61,16 @@ db.once("open", async () => {
 
 db.on("error", (err) => console.error(err));
 
-// TODO?
-// // Run sendBusUpdates every minute between 3 and 5pm every weekday from September to July
-// scheduleJob(
-//   'dailyUpdates',
-//   '*/1 15-17 * 1-7,9-12 1-5',
-//   async () => await sendBusUpdates(client)
-// );
+// Run sendBusUpdates every minute between 3 and 5pm every weekday from September to July
+scheduleJob(
+	"dailyUpdates",
+	"*/1 15-17 * 1-7,9-12 1-5",
+	async () => await sendBusUpdates(client)
+);
 
-// // Reset bus locations to ' ' every weekday at 5pm from September to July
-// scheduleJob(
-//   'resetLocations',
-//   '0 17 * 1-7,9-12 1-5',
-//   async () => await busModel.updateMany({}, { location: ' ' })
-// );
+// Reset bus locations to ' ' every weekday at 5pm from September to July
+scheduleJob(
+	"resetLocations",
+	"0 17 * 1-7,9-12 1-5",
+	async () => await busModel.updateMany({}, { location: " " })
+);
