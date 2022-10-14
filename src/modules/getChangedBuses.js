@@ -15,7 +15,7 @@ module.exports = async () => {
 	const changedBuses = [];
 
 	for (const currentBus of currentBusData) {
-		const matchedBus = await savedBuses.find(
+		const matchedBus = savedBuses.find(
 			(savedBus) => savedBus._id === currentBus._id
 		);
 		if (matchedBus.location !== currentBus.location) {

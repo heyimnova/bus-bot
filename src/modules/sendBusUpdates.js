@@ -1,6 +1,6 @@
 const getChangedBuses = require("./getChangedBuses");
 const guildModel = require("../models/guild");
-const BusEmbed = require("../embeds/bus");
+const createBusEmbed = require("../embeds/bus");
 
 module.exports = async (client) => {
 	const changedBuses = await getChangedBuses();
@@ -51,7 +51,7 @@ module.exports = async (client) => {
 					content: `${await channel.guild.roles.cache.find(
 						(role) => role.name === bus._id
 					)} has arrived at ${bus.location}!`,
-					embeds: [new BusEmbed(client, channel.guild, bus)]
+					embeds: [createBusEmbed(client, channel.guild, bus)]
 				})
 			)
 		);
