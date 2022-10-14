@@ -4,41 +4,43 @@ const busModel = require("../models/bus");
 const createBusEmbed = require("../embeds/bus");
 
 module.exports = {
-  data: new SlashCommandBuilder()
-    .setName("find")
-    .setDescription("Locate a bus!")
-    .addRoleOption((option) =>
-      option
-        .setName("bus")
-        .setDescription("The bus to locate!")
-        .setRequired(true)
-    ),
-  async execute(interaction) {
-    const busRole = await interaction.options.getRole("bus");
+	data: new SlashCommandBuilder()
+		.setName("find")
+		.setDescription("Locate a bus!")
+		.addRoleOption((option) =>
+			option
+				.setName("bus")
+				.setDescription("The bus to locate!")
+				.setRequired(true)
+		),
+	async execute(interaction) {
+		const busRole = await interaction.options.getRole("bus");
 
-    // If user requested a role other than a known bus role, return
-    if (!(await guildModel.findOne({ "busRoles.name": busRole.name }))) {
-      await interaction.reply("This isn't a bus!");
-      return;
-    }
+		// If user requested a role other than a known bus role, return
+		if (!(await guildModel.findOne({ "busRoles.name": busRole.name }))) {
+			await interaction.reply("This isn't a bus!");
+			return;
+		}
 
-    if (new Date().getUTCDay() % 6 === 0) {
-      await interaction.reply("The buses don't run on the weekend!");
-      return;
-    }
+		if (new Date().getUTCDay() % 6 === 0) {
+			await interaction.reply("The buses don't run on the weekend!");
+			return;
+		}
 
-    const requestedBus = await busModel.findOne({ _id: busRole.name });
+		const requestedBus = await busModel.findOne({ _id: busRole.name });
 
-    if (!requestedBus) {
-      await interaction.reply(
-        "The requested bus was not found in the database! D:"
-      );
-      return;
-    }
+		if (!requestedBus) {
+			await interaction.reply(
+				"The requested bus was not found in the database! D:"
+			);
+			return;
+		}
 
-    // Reply with an embed containing the buses location
-    await interaction.reply({
-      embeds: [createBusEmbed(interaction.client, interaction.guild, requestedBus)],
-    });
-  },
+		// Reply with an embed containing the buses location
+		await interaction.reply({
+			embeds: [
+				createBusEmbed(interaction.client, interaction.guild, requestedBus)
+			]
+		});
+	}
 };

@@ -8,17 +8,16 @@ const { Routes } = require("discord-api-types/v9");
  * @param {Array<String>} commandNames Names of commands to register
  */
 module.exports = async (client, guild, commandNames) => {
-  const rest = new REST({ version: "9" }).setToken(process.env.DISCORD_TOKEN);
+	const rest = new REST({ version: "9" }).setToken(process.env.DISCORD_TOKEN);
 
-  // Register all commands in the commandNames array to the specified guild
-  try {
-    await rest.put(Routes.applicationGuildCommands(client.user.id, guild.id), {
-      body: commandNames.map((commandName) => {
-        // @ts-ignore
-        return client.commands.get(commandName).data.toJSON();
-      }),
-    });
-  } catch (err) {
-    console.error(err);
-  }
+	// Register all commands in the commandNames array to the specified guild
+	try {
+		await rest.put(Routes.applicationGuildCommands(client.user.id, guild.id), {
+			body: commandNames.map((commandName) => {
+				return client.commands.get(commandName).data.toJSON();
+			})
+		});
+	} catch (err) {
+		console.error(err);
+	}
 };
