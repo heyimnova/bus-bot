@@ -40,7 +40,7 @@ Currently this project is not published anywhere as a package so the only way to
 $ git clone https://github.com/heyimnova/bus-bot.git
 ```
 
-Once you have a copy of this repository enter it and run `npm update` to install required dependencies:
+Once you have a copy of this repository, enter it and run `npm update` to install required dependencies:
 
 ```bash
 $ cd bus-bot
@@ -71,7 +71,7 @@ Once you have installed and configured the bot, to run it simply execute from wi
 $ node .
 ```
 
-With this you will have a running instance of Bus-Bot! You can now add it to any Discord servers you want to run this service from :)  
+With this you will have a running instance of the Bus Bot! You can now add it to any Discord servers you want to run this service from :)  
   
 ***Running the bot will require the terminal it was run from be left alive, so it is recommended that you run this within a detachable terminal session using a tool such as [tmux](https://github.com/tmux/tmux#readme) so you can leave it running in the background.***
 
