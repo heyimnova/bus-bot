@@ -26,7 +26,7 @@
 
 | Software | Tested Version(s) |
 | -------- | :---------------: |
-| Nodejs   | v16.15            |
+| Nodejs   | v16.14-15         |
 | npm      | 8.19              |
 | MongoDB  | 5                 |
 
