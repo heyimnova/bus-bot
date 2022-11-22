@@ -71,6 +71,6 @@ scheduleJob(
 // Reset bus locations to ' ' every weekday at 5pm from September to July
 scheduleJob(
 	"resetLocations",
-	"0 17 * 1-7,9-12 1-5",
+	"1 17 * 1-7,9-12 1-5",
 	async () => await busModel.updateMany({}, { location: " " })
 );
