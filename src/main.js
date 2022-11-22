@@ -64,7 +64,7 @@ db.on("error", (err) => console.error(err));
 // Run sendBusUpdates every minute between 3 and 5pm every weekday from September to July
 scheduleJob(
 	"dailyUpdates",
-	"*/1 15-17 * 1-7,9-12 1-5",
+	"*/1 15-16 * 1-7,9-12 1-5",
 	async () => await sendBusUpdates(client)
 );
 
