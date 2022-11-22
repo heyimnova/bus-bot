@@ -3,6 +3,8 @@ const registerCommands = require("../modules/registerCommands");
 const busModel = require("../models/bus");
 const guildModel = require("../models/guild");
 const createSetupEmbed = require("../embeds/setup");
+const scrapeBusLocations = require("../modules/scrapeBusLocations");
+const { initialiseDatabase } = require("../modules/updateDatabase");
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -39,6 +41,29 @@ module.exports = {
 		 * @type {Array<String>}
 		 */
 		const busIds = (await busModel.find()).map((bus) => bus._id);
+
+		// If the database contains no buses, try to get them from the website and try again, else fail and return
+		if (busIds.length === 0) {
+			const currentBusData = await scrapeBusLocations();
+
+			if (currentBusData.length > 0) {
+				await initialiseDatabase(currentBusData);
+
+				busIds.push((await busModel.find()).map((bus) => bus._id));
+			} else {
+				interaction.editReply({
+					embeds: [createSetupEmbed("rolesFailed")]
+				});
+				interaction.followUp({
+					content:
+						"Setup failed!\nCannot find buses at the moment, please run again when there are buses at college!",
+					ephemeral: true
+				});
+
+				// Exit setup
+				return;
+			}
+		}
 
 		// All roles in the guild named after a bus id
 		const duplicateRoles = await (
