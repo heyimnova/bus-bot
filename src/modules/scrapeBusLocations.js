@@ -14,9 +14,19 @@ module.exports = () => {
 				// Add an object containing the bus number (_id) and location to busObjects for each bus
 				// Not an arrow function because you cannot use 'this' in arrow functions I believe
 				$("td:first-child").each(function () {
+					const location = $(this).nextAll().last().text();
+					let correctedLocation;
+
+					// If the location is blank, replace it with -
+					if (!/\S/.test(location)) {
+						correctedLocation = "-";
+					} else {
+						correctedLocation = location;
+					}
+
 					busObjects.push({
 						_id: $(this).text(),
-						location: $(this).nextAll().last().text()
+						location: correctedLocation
 					});
 				});
 
