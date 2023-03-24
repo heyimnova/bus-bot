@@ -12,8 +12,8 @@ module.exports = {
 				}
 			}
 		}
-		// Match all buses and set their locations to ' '
-		await busModel.updateMany({}, { location: " " });
+		// Match all buses and set their locations to -
+		await busModel.updateMany({}, { location: "-" });
 	},
 	updateBusLocations: async (buses) => {
 		for (const bus of buses) {
