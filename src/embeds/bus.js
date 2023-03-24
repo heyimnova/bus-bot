@@ -23,9 +23,9 @@ module.exports = (client, guild, bus) =>
 			{
 				name: "Location:",
 				// If the bus doesn't have a location, set its location to "Not yet arrived!"
-				value: bus.location.replace(/\s/g, "")
-					? bus.location
-					: "Not yet arrived!",
+				value: /-/.test(bus.location)
+					? "Not yet arrived!"
+					: bus.location,
 				inline: true
 			}
 		]

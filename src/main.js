@@ -36,6 +36,11 @@ for (const file of commandFiles) {
 
 client.login(process.env.DISCORD_TOKEN);
 
+// Define sleep function
+function sleep(ms) {
+	return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 // Connect to the database
 mongoose.connect(process.env.MONGO_URI);
 const db = mongoose.connection;
@@ -45,15 +50,25 @@ db.once("open", async () => {
 	console.log("Database connection opened");
 
 	try {
-		const busData = await scrapeBusLocations();
-		console.log("Scrape complete");
+		let busData;
 
-		// Make a mongoose model array out of the bus data array
-		const buses = busData.map((busObject) => new busModel(busObject));
+		while (!busData) {
+			busData = await scrapeBusLocations();
 
-		// Push those buses to the database
-		await initialiseBusCollection(buses);
-		console.log("Bus collection initialised");
+			if (typeof busData === String) {
+				await sleep(30000);
+				continue;
+			} else {
+				console.log("Scrape complete");
+			}
+
+			// Make a mongoose model array out of the bus data array
+			const buses = busData.map((busObject) => new busModel(busObject));
+
+			// Push those buses to the database
+			await initialiseBusCollection(buses);
+			console.log("Bus collection initialised");
+		}
 	} catch (err) {
 		console.error(err);
 	}
@@ -68,9 +83,9 @@ scheduleJob(
 	async () => await sendBusUpdates(client)
 );
 
-// Reset bus locations to ' ' every weekday at 5pm from September to July
+// Reset bus locations to - every weekday at 5pm from September to July
 scheduleJob(
 	"resetLocations",
 	"0 17 * 1-7,9-12 1-5",
-	async () => await busModel.updateMany({}, { location: " " })
+	async () => await busModel.updateMany({}, { location: "-" })
 );
