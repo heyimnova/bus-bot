@@ -1,6 +1,6 @@
 {
   "name": "bus-bot",
-  "version": "4.2.1",
+  "version": "4.2.2",
   "description": "Discord bot to notify users of the arrival of their college buses",
   "main": "./src/main.js",
   "scripts": {
@@ -34,7 +34,7 @@
   "devDependencies": {
     "eslint": "^8.25.0",
     "eslint-config-prettier": "^8.5.0",
-    "nodemon": "^2.0.20",
+    "nodemon": "^3.0.1",
     "prettier": "^2.7.1"
   }
 }
