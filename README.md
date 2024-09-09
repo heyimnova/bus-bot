@@ -1,6 +1,6 @@
 <h1 align="center">Bus Bot</h1>
 
-<p align="center"><b>A Discord bot to notify members of my college of the arrival of their college buses!</b></p>
+<p align="center"><b>A Discord bot to notify members of my former college of the arrival of their college buses!</b></p>
 
 ## Table of Contents
 
@@ -12,7 +12,6 @@
 	- [Interacting on Discord](#interacting-on-discord)
 		- [Table of Commands](#table-of-commands)
 - [Updating](#updating)
-- [Contributing](#contributing)
 
 ## Features
 
@@ -24,17 +23,13 @@
 
 ## Requirements
 
-| Software | Tested Version(s) |
-| -------- | :---------------: |
-| Nodejs   | v16-v18           |
-| npm      | 8,9               |
-| MongoDB  | 5                 |
+You will need Node.js (with npm) and a MongoDB instance to run this service.
 
 **You will also need a Discord bot account which you can acquire through [Discord's developer portal](https://discord.com/developers/applications)**
 
 ## Installation
 
-Currently this project is not published anywhere as a package so the only way to get a copy is to clone this repository:
+Clone this repository:
 
 ```bash
 $ git clone https://github.com/heyimnova/bus-bot.git
@@ -44,7 +39,7 @@ Once you have a copy of this repository, enter it and run `npm update` to instal
 
 ```bash
 $ cd bus-bot
-$ npm update
+$ npm ci
 ```
 
 Before you can actually run the bot there are some environment variables the bot requires. The simplest way to set these is to create a .env file inside the bus-bot directory and fill it in as such:
@@ -96,26 +91,7 @@ To update this project the process is very similar to installing it in the first
 
 ```bash
 $ git pull
-$ npm update
+$ npm ci
 ```
 
 From there you can kill and restart the bot and you will be running the newest version.  
-  
-If changes are pushed to this repository that require more steps than above, this section of the README will be updated with instructions on how to correctly update the bot to that version.
-
-## Contributing
-
-If you wish to contribute to this project first of all, thank you!  
-Please ensure that any code you add follows the format of this project as outlined within the .eslintrc.json and .prettierrc.json files, if your code diverges from those rules too much I may not accept it into the project.  
-To ensure your code does follow those rules there are commands built into this package to check and modify your code to follow those rules:
-
-```bash
-$ npm run eslint # Will check your code and inform you of any errors you have made
-$ npm run eslint:fix # Will automatically fix any errors that it can and inform you of any errors you have made that it cannot automatically fix
-$ npm run prettier # Will do the same thing as "npm run eslint" but against prettier's rules instead
-$ npm run prettier:fix # Will do the same thing as "npm run eslint:fix" but against prettier's rules instead
-```
-
-If your contributions aren't being accepted or you wish to take this project in a different direction yourself, you are free to do so in accordance with the terms and conditions of the BSD 2 Clause license this project is licensed under :)  
-  
-Thank you for using the Bus Bot!
